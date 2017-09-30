@@ -1,5 +1,6 @@
 package mx.edu.utng.colvera.calculadora;
 
+import android.content.Intent;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,7 +11,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-
+    CalculadoraCientifica cientifica = new CalculadoraCientifica();
+    CalculadoraNormal normal = new CalculadoraNormal();
     EditText txtNumero1;
     EditText txtNumero2;
     EditText txtResultado;
@@ -20,7 +22,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     Button btnMultiplicar;
     Button btnDividir;
     Button btnLimpiar;
-    // Button btnFactorial;
+    Button btnFactorial;
+    int op;
+    Button btncreditos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +40,20 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         btnMultiplicar = (Button)findViewById(R.id.btn_multiplicar);
         btnDividir = (Button)findViewById(R.id.btn_dividir);
         btnLimpiar = (Button)findViewById(R.id.btn_limpiar);
-       // btnFactorial = (Button)findViewById(R.id.btn_factorial);
+        btnFactorial = (Button)findViewById(R.id.btn_factorial);
         cmbCalculadora.setOnItemSelectedListener(this);
+        btncreditos = (Button)findViewById(R.id.btn_creditos);
+
+        btncreditos.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getApplicationContext(),CreditosActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
 
         btnSumar.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +66,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 num1 = Double.parseDouble(txtNumero1.getText().toString());
                 num2 = Double.parseDouble(txtNumero2.getText().toString());
 
-                total = num1+num2;
+                total = cientifica.sumar(num1,num2);
+                total = normal.sumar(num1,num2);
 
                 txtResultado.setText(""+total);
             }
@@ -66,7 +83,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 num1 = Double.parseDouble(txtNumero1.getText().toString());
                 num2 = Double.parseDouble(txtNumero2.getText().toString());
 
-                total = num1-num2;
+                total = cientifica.restar(num1,num2);
+                total = normal.restar(num1,num2);
 
                 txtResultado.setText(""+total);
             }
@@ -82,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 num1 = Double.parseDouble(txtNumero1.getText().toString());
                 num2 = Double.parseDouble(txtNumero2.getText().toString());
 
-                total = num1*num2;
+                total = normal.multiplicacion(num1,num2);
 
                 txtResultado.setText(""+total);
             }
@@ -98,7 +116,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 num1 = Double.parseDouble(txtNumero1.getText().toString());
                 num2 = Double.parseDouble(txtNumero2.getText().toString());
 
-                total = num1/num2;
+                total = normal.division(num1,num2);
+
+                txtResultado.setText(""+total);
+            }
+        });
+
+        btnFactorial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                double num1;
+                double total=0;
+
+                num1 = Double.parseDouble(txtNumero1.getText().toString());
+
+                total = cientifica.factorial(num1);
 
                 txtResultado.setText(""+total);
             }
@@ -117,36 +149,28 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         });
 
 
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
+        op = (int) cmbCalculadora.getSelectedItemId();
+        switch (op){
+            case 0:
+                btnFactorial.setVisibility(View.GONE);
+                btnDividir.setVisibility(View.VISIBLE);
+                btnMultiplicar.setVisibility(View.VISIBLE);
+                break;
+            case 1:
+                btnDividir.setVisibility(View.GONE);
+                btnMultiplicar.setVisibility(View.GONE);
+                btnFactorial.setVisibility(View.VISIBLE);
+                break;
+        }
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
-
-    //cmbOpciones = (Spinner)findViewById(R.id.cmb_opciones);
-    //txtMinutosLocal = (EditText)findViewById(R.id.txt_local);
-    //txtMinutosLD = (EditText)findViewById(R.id.txt_minutos_id);
-
-
-
 }

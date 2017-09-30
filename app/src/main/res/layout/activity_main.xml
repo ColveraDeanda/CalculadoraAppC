@@ -84,6 +84,14 @@
 
         ></LinearLayout>
 
+    <Button
+        android:layout_width="180dp"
+        android:layout_height="45dp"
+        android:text="@string/texto_factorial"
+        android:id="@+id/btn_factorial"
+
+        />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -103,6 +111,12 @@
         android:layout_height="wrap_content"
         android:text="@string/texto_limpiar"
         android:id="@+id/btn_limpiar"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/texto_creditos"
+        android:id="@+id/btn_creditos"
         />
 
 

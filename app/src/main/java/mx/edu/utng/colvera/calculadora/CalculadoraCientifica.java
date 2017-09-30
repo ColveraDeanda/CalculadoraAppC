@@ -8,12 +8,13 @@ public class CalculadoraCientifica implements Calculadora {
 
     @Override
     public double sumar(double num1, double num2) {
-        return 0;
+
+        return num1+num2;
     }
 
     @Override
-    public double restar(double numero1, double numero2) {
-        return 0;
+    public double restar(double num1, double num2) {
+        return num1-num2;
     }
 
     public double factorial(double num1){ //Método recursivo
